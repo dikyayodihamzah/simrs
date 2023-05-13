@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"github.com/dikyayodihamzah/simrs.git/render"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -19,12 +18,19 @@ import (
 // 	}
 // }
 
-func Controller(app *fiber.App) {
+func Route(app *fiber.App) {
 	app.Static("/", "./static/assets")
 
-	app.Get("/", render.Home)
-
+	app.Get("/", Home)
 	app.Get("/data-pasien", func(c *fiber.Ctx) error {
 		return c.Render("pages-data-pasien", fiber.Map{})
 	})
+}
+
+func Home(c *fiber.Ctx) error {
+	if err := c.Render("home", fiber.Map{}); err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, "can't render html")
+	}
+
+	return nil
 }
