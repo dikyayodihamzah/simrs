@@ -5,10 +5,12 @@ import (
 	"time"
 
 	"github.com/dikyayodihamzah/simrs.git/config"
+	"github.com/dikyayodihamzah/simrs.git/controller"
 	"github.com/dikyayodihamzah/simrs.git/exception"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/template/html/v2"
 )
 
 func main() {
@@ -19,7 +21,11 @@ func main() {
 
 	serverConfig := config.NewServerConfig()
 
-	app := fiber.New()
+	engine := html.New("./static", ".html")
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	})
+	
 	app.Use(recover.New())
 	app.Use(cors.New(cors.Config{
 		AllowOrigins:     "*",
@@ -27,6 +33,8 @@ func main() {
 		AllowHeaders:     "*",
 		AllowCredentials: true,
 	}))
+
+	controller.Controller(app)
 
 	err := app.Listen(serverConfig.URI)
 	exception.PanicIfError(err)

@@ -4,12 +4,14 @@ go 1.20
 
 require (
 	github.com/gofiber/fiber/v2 v2.44.0
+	github.com/gofiber/template/html/v2 v2.0.0
 	github.com/joho/godotenv v1.5.1
 	go.mongodb.org/mongo-driver v1.11.4
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/gofiber/utils v1.1.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/uuid v1.3.0 // indirect
