@@ -14,7 +14,7 @@
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   background: #f6f9ff;
   color: #444444;
 }
@@ -35,7 +35,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -153,7 +153,7 @@ h6 {
 
 @media (min-width: 768px) {
   .dropdown-menu-arrow::before {
-    content: "";
+    content: '';
     width: 13px;
     height: 13px;
     background: #fff;
@@ -237,7 +237,7 @@ h6 {
   font-size: 18px;
   font-weight: 500;
   color: #012970;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .card-title span {
@@ -257,7 +257,7 @@ h6 {
 /* Alerts */
 .alert-heading {
   font-weight: 500;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 20px;
 }
 
@@ -306,7 +306,7 @@ h6 {
 /* Breadcrumbs */
 .breadcrumb {
   font-size: 14px;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   color: #899bbd;
   font-weight: 600;
 }
@@ -373,7 +373,7 @@ h6 {
   font-size: 26px;
   font-weight: 700;
   color: #012970;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .header {
@@ -461,7 +461,7 @@ h6 {
   list-style: none;
 }
 
-.header-nav>ul {
+.header-nav > ul {
   margin: 0;
   padding: 0;
 }
@@ -630,7 +630,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   #main,
   #footer {
     margin-left: 300px;
@@ -644,7 +643,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
     margin-left: 0;
@@ -820,18 +818,28 @@ h6 {
   flex-grow: 0;
 }
 
-.dashboard .sales-card .card-icon {
-  color: #4154f1;
-  background: #f6f6fe;
+.dashboard .total-patient-card .card-icon {
+  color: #ff771d;
+  background: #ffecdf;
 }
 
-.dashboard .revenue-card .card-icon {
+.dashboard .total-bed-card .card-icon {
   color: #2eca6a;
   background: #e0f8e9;
 }
 
-.dashboard .customers-card .card-icon {
-  color: #ff771d;
+.dashboard .vip-card .card-icon {
+  color: #4154f1;
+  background: #f6f6fe;
+}
+
+.dashboard .first-class-card .card-icon {
+  color: green;
+  background: #ffecdf;
+}
+
+.dashboard .second-class-card .card-icon {
+  color: orange;
   background: #ffecdf;
 }
 
@@ -849,7 +857,7 @@ h6 {
 }
 
 .dashboard .activity .activity-item .activite-label::before {
-  content: "";
+  content: '';
   position: absolute;
   right: -11px;
   width: 4px;
@@ -883,7 +891,7 @@ h6 {
 }
 
 /* News & Updates */
-.dashboard .news .post-item+.post-item {
+.dashboard .news .post-item + .post-item {
   margin-top: 15px;
 }
 
@@ -1117,7 +1125,7 @@ h6 {
 }
 
 .contact .php-email-form .loading:before {
-  content: "";
+  content: '';
   display: inline-block;
   border-radius: 50%;
   width: 24px;
@@ -1149,7 +1157,7 @@ h6 {
   padding: 12px 15px;
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[type='submit'] {
   background: #4154f1;
   border: 0;
   padding: 10px 30px;
@@ -1158,7 +1166,7 @@ h6 {
   border-radius: 4px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .php-email-form button[type='submit']:hover {
   background: #5969f3;
 }
 
@@ -1234,15 +1242,13 @@ h6 {
 
 .form {
   display: inline-block;
-<<<<<<< HEAD
-=======
 }
 
 .position-relative-example {
   height: 400px;
   width: 100%;
   background-color: #f5f5f5;
-  }
+}
 
 /*--------------------------------------------------------------
 # Kamar
@@ -1258,7 +1264,7 @@ h6 {
 
 .movie-container select {
   background-color: #fff;
-  border: 0;
+  border: solid;
   border-radius: 5px;
   font-size: 14px;
   margin-left: 10px;
@@ -1341,5 +1347,4 @@ p.text {
 
 p.text span {
   color: #6feaf6;
->>>>>>> f6267f7 (added denah html)
 }

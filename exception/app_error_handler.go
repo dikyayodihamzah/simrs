@@ -3,7 +3,7 @@ package exception
 import (
 	"errors"
 
-	"github.com/dikyayodihamzah/simrs.git/model/web"
+	"github.com/dikyayodihamzah/simrs/model/web"
 	"github.com/gofiber/fiber/v2"
 )
 

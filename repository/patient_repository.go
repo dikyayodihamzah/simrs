@@ -3,15 +3,18 @@ package repository
 import (
 	"context"
 	"os"
+	"strconv"
 	"time"
 
-	"github.com/dikyayodihamzah/simrs.git/exception"
-	"github.com/dikyayodihamzah/simrs.git/model/domain"
+	"github.com/dikyayodihamzah/simrs/exception"
+	"github.com/dikyayodihamzah/simrs/model/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+var dbName = os.Getenv("DB_NAME")
 var collPatient = os.Getenv("PATIENT_COLLECTION")
+var setTimeout, _ = strconv.Atoi(os.Getenv("DB_TIMEOUT"))
 
 type PatientRepository interface {
 	CreatePatient(c context.Context, patient domain.Patient) (*mongo.InsertOneResult, error)
@@ -84,13 +87,13 @@ func (repository *patientRepository) UpdatePatient(c context.Context, nik string
 	coll := db.Collection(collPatient)
 
 	update := bson.M{
-		"name":        patient.Name,
-		"patientname": patient.patientname,
-		"email":       patient.Email,
-		"password":    patient.Password,
-		"phone":       patient.Phone,
-		"is_merchant": patient.IsMerchant,
-		"updated_at":  time.Now(),
+		"nik":        patient.NIK,
+		"name":       patient.Name,
+		"pdob":       patient.PDoB,
+		"address":    patient.Address,
+		"phone":      patient.Phone,
+		"blood_type": patient.BloodType,
+		"updated_at": patient.UpdatedAt,
 	}
 
 	if _, err := coll.UpdateByID(ctx, nik, bson.M{"$set": update}); err != nil {
@@ -107,7 +110,7 @@ func (repository *patientRepository) DeleteOne(c context.Context, nik string) er
 	db := repository.Client.Database(dbName)
 	coll := db.Collection(collPatient)
 
-	if _, err := coll.DeleteOne(ctx, bson.M{"_id": nik}); err != nil {
+	if _, err := coll.DeleteOne(ctx, bson.M{"nik": nik}); err != nil {
 		return exception.ErrInternalServer(err.Error())
 	}
 

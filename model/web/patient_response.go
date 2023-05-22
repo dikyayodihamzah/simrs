@@ -3,7 +3,7 @@ package web
 import (
 	"time"
 
-	"github.com/dikyayodihamzah/simrs.git/model/domain"
+	"github.com/dikyayodihamzah/simrs/model/domain"
 )
 
 type PatientResponse struct {

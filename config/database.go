@@ -3,11 +3,10 @@ package config
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
-	"strconv"
-	"time"
 
-	"github.com/dikyayodihamzah/simrs.git/exception"
+	"github.com/dikyayodihamzah/simrs/exception"
 	_ "github.com/joho/godotenv/autoload"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -15,35 +14,27 @@ import (
 )
 
 var (
-	DB *mongo.Client = ConnectDB()
-
-	host          = os.Getenv("DB_HOST")
-	port          = os.Getenv("DB_PORT")
-	username      = os.Getenv("DB_USERNAME")
-	password      = os.Getenv("DB_PASSWORD")
-	setTimeout, _ = strconv.Atoi(os.Getenv("DB_TIMEOUT"))
+	host     = os.Getenv("DB_HOST")
+	port     = os.Getenv("DB_PORT")
+	username = os.Getenv("DB_USERNAME")
+	password = os.Getenv("DB_PASSWORD")
 )
 
-func NewDBContext() (context.Context, context.CancelFunc) {
-	return context.WithTimeout(context.Background(), time.Duration(setTimeout)*time.Second)
-}
-
-func ConnectDB() *mongo.Client {
-	ctx, cancel := NewDBContext()
-	defer cancel()
-
-	uri := fmt.Sprintf("mongodb://%s:%s@%s:%s/", username, password, host, port)
-	option := options.Client().ApplyURI(uri)
+func NewDB() *mongo.Client {
+	dsn := fmt.Sprintf("mongodb://%s:%s@%s:%s", username, password, host, port)
+	fmt.Println(dsn)
+	option := options.Client().ApplyURI(dsn)
 
 	client, err := mongo.NewClient(option)
 	exception.PanicIfError(err)
 
-	err = client.Connect(ctx)
+	err = client.Connect(context.Background())
 	exception.PanicIfError(err)
 
 	//ping database
-	err = client.Ping(ctx, readpref.Primary())
+	err = client.Ping(context.Background(), readpref.Primary())
 	exception.PanicIfError(err)
 
+	log.Println("Connected to database")
 	return client
 }

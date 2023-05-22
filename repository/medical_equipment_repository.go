@@ -3,19 +3,14 @@ package repository
 import (
 	"context"
 	"os"
-	"strconv"
 	"time"
 
-	"github.com/dikyayodihamzah/simrs.git/model/domain"
+	"github.com/dikyayodihamzah/simrs/model/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var (
-	dbName        = os.Getenv("DB_NAME")
-	collMeqEq     = os.Getenv("MEDICAL_EQUIPMENT_COLLECTION")
-	setTimeout, _ = strconv.Atoi(os.Getenv("DB_TIMEOUT"))
-)
+var collMeqEq = os.Getenv("MEDICAL_EQUIPMENT_COLLECTION")
 
 type MedEqRepository interface {
 	FindOne(c context.Context, params, value string) (domain.MedicalEquipment, error)
@@ -25,6 +20,11 @@ type medEqRepository struct {
 	Client *mongo.Client
 }
 
+func NewMedEqRepository(clinet *mongo.Client) MedEqRepository {
+	return &medEqRepository{
+		Client: clinet,
+	}
+}
 func (repository *medEqRepository) FindOne(c context.Context, params, value string) (domain.MedicalEquipment, error) {
 	ctx, cancel := context.WithTimeout(c, time.Duration(setTimeout)*time.Second)
 	defer cancel()

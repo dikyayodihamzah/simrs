@@ -1,29 +1,29 @@
 package controller
 
 import (
-	"github.com/dikyayodihamzah/simrs.git/service"
+	"github.com/dikyayodihamzah/simrs/handler"
 	"github.com/gofiber/fiber/v2"
 )
 
-// type AppController interface {
-// 	NewAppRouter(app *fiber.App)
-// }
+type AppController interface {
+	Route(app *fiber.App)
+}
 
-// type appController struct {
-// 	AppService service.AppService
-// }
+type appController struct {
+	AppHandler handler.AppHandler
+}
 
-// func NewAppController(appService service.AppService) AppController {
-// 	return &appController{
-// 		AppService: appService,
-// 	}
-// }
+func NewAppController(appHandler handler.AppHandler) AppController {
+	return &appController{
+		AppHandler: appHandler,
+	}
+}
 
-func Route(app *fiber.App) {
-	app.Static("/", "./static")
+func (controller *appController) Route(app *fiber.App) {
+	app.Static("", "./static/assets")
 
-	app.Get("/login", service.Login)
-	app.Get("/", service.Dashboard)
+	app.Get("/login", handler.Login)
+	app.Get("/", controller.AppHandler.Dashboard)
 	app.Get("/data-pasien", func(c *fiber.Ctx) error {
 		return c.Render("pages-data-pasien", fiber.Map{})
 	})
