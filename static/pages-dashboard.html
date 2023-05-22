@@ -1,0 +1,141 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>{{ .Title }}</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active">{{ .Title }}</li>
+      </ol>
+    </nav>
+  </div>
+  <!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="row">
+      <!-- Left side columns -->
+      <div class="col-lg-12">
+        <div class="row">
+          <!-- Sales Card -->
+          <div class="col-md-5 col-xl-6">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">Jumlah Pasien</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ .TotalPatient}}</h6>
+                    <span class="text-muted small pt-3 ps-1"
+                      >dari total kapasitas</span
+                    >
+                    <span class="text-danger medium pt-5 fw-bold"
+                      >{{ .TotalRoom}}</span
+                    >
+                    <span class="text-muted small pt-3 ps-1">pasien</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Sales Card -->
+
+          <!-- Revenue Card -->
+          <div class="col-md-5 col-xl-6">
+            <div class="card info-card revenue-card">
+              <div class="card-body">
+                <h5 class="card-title">Jumlah Tempat Tidur</h5>
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bx bx-bed"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ .TotalRoom}}</h6>
+                    <span class="text-muted small pt-3 ps-1"
+                      >terpakai dari total</span
+                    >
+                    <span class="text-danger medium pt-5 fw-bold"
+                      >{{ .TotalRoom}}</span
+                    >
+                    <span class="text-muted small pt-3 ps-1">tempat tidur</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Revenue Card -->
+        </div>
+        <div class="row">
+          <!-- Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+              <div class="card-body">
+                <h5 class="card-title">Kamar Terpakai</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="ri-hotel-bed-line"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ .UsedRoom}}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Sales Card -->
+
+          <!-- Revenue Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+              <div class="card-body">
+                <h5 class="card-title">Jumlah Kamar</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bx bx-bed"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ .TotalRoom}}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Revenue Card -->
+
+          <!-- Customers Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">Total Pasien</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ .TotalPatient}}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Customers Card -->
+        </div>
+      </div>
+      <!-- End Left side columns -->
+    </div>
+  </section>
+</main>

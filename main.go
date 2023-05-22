@@ -24,8 +24,9 @@ func main() {
 	engine := html.New("./static", ".html")
 	app := fiber.New(fiber.Config{
 		Views: engine,
+		ViewsLayout: "base-layout",
 	})
-	
+
 	app.Use(recover.New())
 	app.Use(cors.New(cors.Config{
 		AllowOrigins:     "*",
@@ -34,7 +35,7 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	controller.Controller(app)
+	controller.Route(app)
 
 	err := app.Listen(serverConfig.URI)
 	exception.PanicIfError(err)
