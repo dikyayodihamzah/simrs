@@ -10,21 +10,28 @@ type AppController interface {
 }
 
 type appController struct {
-	AppHandler handler.AppHandler
+	DashboardHandler handler.DashboardHandler
+	PatientHandler   handler.PatientHandler
 }
 
-func NewAppController(appHandler handler.AppHandler) AppController {
+func NewAppController(dashboardHandler handler.DashboardHandler, patientHandler handler.PatientHandler) AppController {
 	return &appController{
-		AppHandler: appHandler,
+		DashboardHandler: dashboardHandler,
+		PatientHandler:   patientHandler,
 	}
 }
 
 func (controller *appController) Route(app *fiber.App) {
-	app.Static("", "./static/assets")
+	app.Static("/", "./static")
 
-	app.Get("/login", handler.Login)
-	app.Get("/", controller.AppHandler.Dashboard)
-	app.Get("/data-pasien", func(c *fiber.Ctx) error {
-		return c.Render("pages-data-pasien", fiber.Map{})
-	})
+	// app.Get("/login", handler.Login)
+
+	// dashboard routes
+	app.Get("/", controller.DashboardHandler.Dashboard)
+
+	// patient routes
+	app.Get("/patients", controller.PatientHandler.GetAllPatients)
+	app.Get("/patients/:id", controller.PatientHandler.GetAllPatients)
+	app.Get("/input-patient", controller.PatientHandler.InputPatient)
+	// app.Post("/patients/input", controller.AppHandler.GetAllPatients)
 }

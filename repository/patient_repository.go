@@ -18,7 +18,8 @@ var setTimeout, _ = strconv.Atoi(os.Getenv("DB_TIMEOUT"))
 
 type PatientRepository interface {
 	CreatePatient(c context.Context, patient domain.Patient) (*mongo.InsertOneResult, error)
-	FindOnePatient(c context.Context, params, value string) (domain.Patient, error)
+	FindOnePatient(c context.Context, key, value string) (domain.Patient, error)
+	FindAllPatients(c context.Context) ([]domain.Patient, error)
 	UpdatePatient(c context.Context, nik string, patient domain.Patient) error
 	DeleteOne(c context.Context, nik string) error
 }
@@ -48,14 +49,14 @@ func (repository *patientRepository) CreatePatient(c context.Context, patient do
 	return result, err
 }
 
-func (repository *patientRepository) FindOnePatient(c context.Context, params, value string) (domain.Patient, error) {
+func (repository *patientRepository) FindOnePatient(c context.Context, key, value string) (domain.Patient, error) {
 	ctx, cancel := context.WithTimeout(c, time.Duration(setTimeout)*time.Second)
 	defer cancel()
 
 	db := repository.Client.Database(dbName)
 	coll := db.Collection(collPatient)
 
-	result := coll.FindOne(ctx, bson.M{params: value})
+	result := coll.FindOne(ctx, bson.M{key: value})
 
 	var patient domain.Patient
 	result.Decode(&patient)
@@ -69,14 +70,39 @@ func (repository *patientRepository) FindAllPatients(c context.Context) ([]domai
 	db := repository.Client.Database(dbName)
 	coll := db.Collection(collPatient)
 
-	result, err := coll.Find(ctx, bson.M{})
+	cursor, err := coll.Find(ctx, bson.M{})
 	if err != nil {
-		return []domain.Patient{}, result.Err()
+		return []domain.Patient{}, exception.ErrInternalServer(err.Error())
 	}
 
 	var patients []domain.Patient
-	result.Decode(&patients)
-	return patients, result.Err()
+	if err := cursor.All(ctx, patients); err != nil {
+		return []domain.Patient{}, exception.ErrInternalServer(err.Error())
+	}
+
+	return patients, nil
+}
+
+func (repository *patientRepository) FindAllWithQuery(c context.Context, key, value string) ([]domain.Patient, error) {
+	ctx, cancel := context.WithTimeout(c, time.Duration(setTimeout)*time.Second)
+	defer cancel()
+
+	db := repository.Client.Database(dbName)
+	coll := db.Collection(collPatient)
+
+	matchStage := bson.D{{Key: "$match", Value: bson.D{{Key: key, Value: value}}}}
+
+	cursor, err := coll.Aggregate(ctx, mongo.Pipeline{matchStage})
+	if err != nil {
+		return []domain.Patient{}, exception.ErrInternalServer(err.Error())
+	}
+
+	var patients []domain.Patient
+	if err := cursor.All(ctx, patients); err != nil {
+		return []domain.Patient{}, exception.ErrInternalServer(err.Error())
+	}
+
+	return patients, nil
 }
 
 func (repository *patientRepository) UpdatePatient(c context.Context, nik string, patient domain.Patient) error {
@@ -89,7 +115,7 @@ func (repository *patientRepository) UpdatePatient(c context.Context, nik string
 	update := bson.M{
 		"nik":        patient.NIK,
 		"name":       patient.Name,
-		"pdob":       patient.PDoB,
+		"dob":        patient.DoB,
 		"address":    patient.Address,
 		"phone":      patient.Phone,
 		"blood_type": patient.BloodType,

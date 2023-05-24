@@ -1,0 +1,140 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>{{ .Title}}</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/patients">Data Pasien</a></li>
+        <li class="breadcrumb-item active">{{ .Title}}</li>
+      </ol>
+    </nav>
+    <div class="text">
+      <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#pasienlama" style="background-color: slategray;">Pasien Lama</button>
+        <div class="modal fade" id="pasienlama" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="pasienlamatitle"><strong>PASIEN LAMA</strong></h5>                 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <h6>Masukkan ID EMR Pasien</h6>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="inputNumber" placeholder="ID Pasien">
+                  <span type="submit" class="btn btn-primary">Submit</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div><!-- End Page Title -->  
+
+  <section class="section">
+    <div class="row">
+        <div class="card">           
+          <div class="card-body">    
+            </ul><!-- End Profile Dropdown Items -->                           
+            <h5 class="card-title">Biodata</h5>
+
+            <!-- General Form Elements -->
+            <form class="row g-3">
+              <div class="col-md-8">
+                <label for="inputNanme4" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="inputName">
+              </div>
+              <div class="col-md-4">
+                <label for="inputDate" class="form-label">Tanggal Lahir</label>
+                <input type="date" class="form-control" id="inputDate">
+              </div>
+              <div class="col-md-7">
+                <label for="inputAddress5" class="form-label">Alamat</label>
+                <input type="text" class="form-control" id="inputAddres5s" placeholder="1234 Main St">
+              </div>
+              <div class="col-md-5">
+                <label for="inputNumber" class="form-label">Nomor Telepon</label>
+                <input type="number" class="form-control" id="inputNumber">
+              </div>
+              <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail4">
+              </div>
+              <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputPassword4">
+              </div>
+              <div class="col-md-6">
+                <label for="inputKTP" class="form-label">NIK</label>
+                <input type="text" class="form-control" id="nik">
+              </div>
+              <div class="col-md-6">
+                <label for="inputGK" class="form-label">Golongan Darah</label>
+                <select class="form-select" aria-label="Default select example">
+                  <option selected value="-">-</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="AB">AB</option>
+                  <option value="O">O</option>
+                </select>
+              </div>
+            </form><!-- End General Form Elements -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Gejala</h5>
+            <form class="row g-3">
+              <div class="col-12">
+                {{range .Symptoms}}
+                <div class="form-check">
+                  <label class="checkbox-inline">
+                    <input type="checkbox" id="{{ .ID}}">  {{ .Name}}
+                  </label>
+                </div>
+                {{end}}
+              </div>     
+            </form><!-- End Multi Columns Form -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Keterangan Tambahan</h5>      
+              <!-- General Form Elements -->
+                <form class="row g-3">
+                  <div class="col-md-12">
+                    <textarea class="form-control" style="height: 100px"></textarea>
+                  </div>                                         
+                </form><!-- End General Form Elements -->                  
+          </div>            
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Submit</button>
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Rekomendasi Kamar</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h6>Kamar yang Disarankan : </h6>
+                  <h3><strong>Kamar {{ .RoomNumber}}</strong></h3>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Pilih Kamar Lain</button>
+                  <button type="button" class="btn btn-primary">Setuju</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+    </div>
+  </section>
+</main>

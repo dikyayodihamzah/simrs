@@ -5,28 +5,26 @@ import (
 	"strconv"
 
 	"github.com/dikyayodihamzah/simrs/repository"
-	"github.com/go-playground/validator"
 	"github.com/gofiber/fiber/v2"
 )
 
-type AppHandler interface {
+type DashboardHandler interface {
 	Dashboard(c *fiber.Ctx) error
 }
-type appHandler struct {
+
+type dashboardHandler struct {
 	RoomRepository      repository.RoomRepository
 	ImpatientRepository repository.ImpatientRepository
-	Validate            *validator.Validate
 }
 
-func NewAppHandler(roomRepository repository.RoomRepository, impatientRepository repository.ImpatientRepository, validate *validator.Validate) AppHandler {
-	return &appHandler{
+func NewDashboardHandler(roomRepository repository.RoomRepository, impatientRepository repository.ImpatientRepository) DashboardHandler {
+	return &dashboardHandler{
 		RoomRepository:      roomRepository,
 		ImpatientRepository: impatientRepository,
-		Validate:            validate,
 	}
 }
 
-func (handler *appHandler) Dashboard(c *fiber.Ctx) error {
+func (handler *dashboardHandler) Dashboard(c *fiber.Ctx) error {
 	var vipBed int
 	var firstClassBed int
 	var secondClassBed int
@@ -85,24 +83,4 @@ func (handler *appHandler) Dashboard(c *fiber.Ctx) error {
 		"SecondClassPatient": secondClassPatient,
 		"SecondClassBed":     secondClassBed,
 	})
-}
-
-func Login(c *fiber.Ctx) error {
-	return c.Render("pages-login", fiber.Map{})
-}
-
-func InformasiKamar(c *fiber.Ctx) error {
-	return c.Render("pages-data-pasien", fiber.Map{})
-}
-
-func DataPasien(c *fiber.Ctx) error {
-	return c.Render("dashboard", fiber.Map{})
-}
-
-func About(c *fiber.Ctx) error {
-	return c.Render("dashboard", fiber.Map{})
-}
-
-func Kontak(c *fiber.Ctx) error {
-	return c.Render("pages-contact", fiber.Map{})
 }
